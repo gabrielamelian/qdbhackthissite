@@ -1,0 +1,4 @@
+#Removes composer elements
+
+composer.phar
+/vendor/
