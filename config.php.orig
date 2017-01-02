@@ -1,0 +1,12 @@
+<?php
+
+$app->register(new Silex\Provider\DoctrineServiceProvider(), array(
+    'db.options' => array(
+        'driver'    => 'pdo_mysql',
+        'host'      => 'localhost',
+        'dbname'    => 'qdb',
+        'user'      => 'my_username',
+        'password'  => 'my_password',
+        'charset'   => 'utf8mb4',
+    ),
+));
