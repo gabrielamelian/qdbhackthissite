@@ -28,11 +28,11 @@ PHPUnit for testing
 
 * POST Sends contents to DB on body such as follows:
 
-``json
+```json
 {
   "quote": "This is the quote content"
 }
-``
+```
 
 If the request is unsuccesfull it will redirect to the submit page again.
 
@@ -61,12 +61,12 @@ If the request is unsuccesfull it will redirect to the submit page again.
 
 * POST to change the vote of a quote. Each IP address can upvote or downvote each quote only once. The server will check the ip address and the previous vote
 
-``json
+```json
 {
   "qid": "451",
   "value": "upvote"
 }
-``
+```
 
 ##Admin
 
@@ -88,9 +88,9 @@ If the request is unsuccesfull it will redirect to the submit page again.
 
 * POST to approve or reject a quote. Requires authentication.
 
-``json
+```json
 {
   "qid": "451",
   "status": "approved"
 }
-``
+```
