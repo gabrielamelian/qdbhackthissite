@@ -14,6 +14,12 @@ PHPUnit for testing
 
 ...Restful routes...
 
+##Random
+
+###Url /index.php
+
+* GET renders page with 50 quotes in random order from the DB. Add a refresh button.
+
 ##Submit
 
 ###Url /submit.php
@@ -28,8 +34,27 @@ PHPUnit for testing
 }
 ``
 
-If the request is unsuccesfull it will redirect to the submit page again
+If the request is unsuccesfull it will redirect to the submit page again.
 
 ##Latest
 
+###Url /latest.php
+
 * GET render page with newest 50 posts from DB. Add a refresh button.
+
+
+##Top 50
+
+###Url /top50.php
+
+* GET renders page with 50 posts with the most number of upvotes.
+
+##Bottom 50
+
+###Url /bottom50.php
+
+* GET renders page with 50 posts with the least number of upvotes.
+
+##Votes
+
+###Url /vote.php
