@@ -13,7 +13,7 @@ PHPUnit for testing
 #Endpoints
 
 ...Restful routes...
-/quotes/index
+/quotes/random
 /quotes/latest
 /quotes/top50
 /quotes/bottom50
@@ -26,7 +26,7 @@ PHPUnit for testing
 
 ##Random
 
-###Url quotes/index
+###Url quotes/random
 
 * GET renders page with 50 quotes in random order from the DB. Add a refresh button.
 

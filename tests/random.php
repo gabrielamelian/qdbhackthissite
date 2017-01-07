@@ -13,9 +13,9 @@ class IndexRandom extends WebTestCase {
       return $app;
     }
 
-    public function testHelloWorld() {
+    public function testRandom() {
       $client = $this->createClient();
-      $crawler = $client->request('GET', '/hello/gabita');
+      $crawler = $client->request('GET', '/quotes/random');
 
       $this->assertTrue($client->getResponse()->isOk());
       $this->assertCount(1, $crawler->filter('html:contains("Hello gabita")'));

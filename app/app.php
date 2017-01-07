@@ -9,8 +9,11 @@ require_once __DIR__.'/../controllers/quotes.php';
 
 $app['debug'] = true;
 
-$app->get('/hello/{name}', function ($name) use ($app) {
-    return '<html>Hello '.$app->escape($name).'</html>';
+$app->get('/quotes/random', 'Controllers\\Quotes::random');
+
+//Homepage redirects to the quote route
+$app->get('/', function () use ($app) {
+    return $app->redirect('/quotes');
 });
 
 return $app;
