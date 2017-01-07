@@ -5,16 +5,25 @@ require_once __DIR__.'/base.php';
 
 class SubmitTest extends BaseTest {
 
+    /**
+     * Internal utility function for submitting quotes for testing.
+     * @return $crawler the crawler.
+     */
+    private function submitQuote() {
+        $client = $this->createClient();
+        $crawler = $client->request('POST', '/quotes/submit', array(
+            'quote' => 'me> i can internetz\n',
+        ));
+
+        return $crawler;
+    }
+
     public function testAddsQuote() {
-      $client = $this->createClient();
-      $crawler = $client->request('POST', '/quotes/submit', array(
-          'quote' => 'me> i can internetz\n',
-      ));
+        $firstCount = $this->countTable('qdb_quotes');
+        $this->submitQuote();
+        $secondCount = $this->countTable('qdb_quotes');
 
-      echo $client->getResponse();
-
-      //$this->assertTrue($client->getResponse()->isOk());
-      //$this->assertCount(1, $crawler->filter('html:contains("Hello gabita")'));
+        $this->assertEquals($secondCount, $firstCount + 1);
     }
 
 }
