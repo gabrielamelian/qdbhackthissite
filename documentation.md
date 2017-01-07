@@ -13,16 +13,44 @@ PHPUnit for testing
 #Endpoints
 
 ...Restful routes...
+/quotes/random
+/quotes/latest
+/quotes/top50
+/quotes/bottom50
+/quotes/submit
+/quotes/{id}
+/quotes/{id}/vote
+/admin
+/admin/approve
+/admin/approve/{id}
 
 ##Random
 
-###Url /index
+###Url quotes/random
 
 * GET renders page with 50 quotes in random order from the DB. Add a refresh button.
 
+##Latest
+
+###Url quotes/latest
+
+* GET render page with newest 50 posts from DB. Add a refresh button.
+
+##Top 50
+
+###Url quotes/top50
+
+* GET renders page with 50 posts with the most number of upvotes.
+
+##Bottom 50
+
+###Url quotes/bottom50
+
+* GET renders page with 50 posts with the least number of upvotes.
+
 ##Submit
 
-###Url /submit
+###Url quotes/submit
 
 * GET Renders form page. Needs to include Captcha. Submit button and Reset button.
 
@@ -36,28 +64,15 @@ PHPUnit for testing
 
 If the request is unsuccesfull it will redirect to the submit page again.
 
-##Latest
+##See a quote
 
-###Url /latest
+###Url quotes/{id}
 
-* GET render page with newest 50 posts from DB. Add a refresh button.
-
-
-##Top 50
-
-###Url /top50
-
-* GET renders page with 50 posts with the most number of upvotes.
-
-##Bottom 50
-
-###Url /bottom50
-
-* GET renders page with 50 posts with the least number of upvotes.
+* GET renders a single quote view
 
 ##Votes
 
-###Url /vote
+###Url quotes/{id}/vote
 
 * POST to change the vote of a quote. Each IP address can upvote or downvote each quote only once. The server will check the ip address and the previous vote
 
