@@ -19,6 +19,11 @@ class BaseTest extends WebTestCase {
         return $app;
     }
 
+    public function initSQL($file) {
+      $sql = file_get_contents($file);
+      $this->db->query($sql);
+    }
+
     public function setUp() {
         parent::setUp();
         $this->databaseSetUp();
@@ -34,7 +39,7 @@ class BaseTest extends WebTestCase {
             $this->db->query("CREATE DATABASE {$this->testDB};");
             $this->db->query("USE {$this->testDB};");
         } catch(PDOException $exc) {
-            // If temporary database already exists, delete and try again 
+            // If temporary database already exists, delete and try again
             // only once.
             if(!$last) {
                 $this->databaseTearDown();
@@ -48,14 +53,19 @@ class BaseTest extends WebTestCase {
         $this->initSQL(__DIR__.'/seeds.sql');
     }
 
+    public function seedDB() {
+      for ($x = 0; $x <= 50; $x++){
+        $this->db->insert('qdb_quotes', array('score' => $x + 20,
+          'votes' => $x + 25,
+          'status' => 1,
+          'quote' => 'This is quote number' . $x
+        ));
+      }
+    }
+
     public function databaseTearDown() {
         if($this->db) {
             $this->db->query("DROP DATABASE {$this->testDB}");
         }
-    }
-
-    public function initSQL($file) {
-        $sql = file_get_contents($file);
-        $this->db->query($sql);
     }
 }
