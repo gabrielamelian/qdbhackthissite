@@ -10,7 +10,6 @@ class IndexRandom extends BaseTest {
       $client = $this->createClient();
       $crawler = $client->request('GET', '/');
 
-      $this->assertTrue($client->getResponse()->isOk(), 'Response from index is ok');
       $this->assertTrue($client->getResponse()->isRedirect('/quotes/random'),
     'response is a redirect to /quotes/random');
     }

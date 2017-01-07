@@ -8,7 +8,7 @@ namespace Controllers
     class Quotes
     {
         public function random() {
-
+          return '<html>lol</html>';
         }
     }
 }
