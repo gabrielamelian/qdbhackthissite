@@ -18,13 +18,12 @@ class Quotes
 
     public function submitForm(Request $request, Application $app) {
         $db = $app['db'];
-        $quote = $request->get('quote');
-
         $db->insert('qdb_quotes', array(
-            'quote' => $quote
+            'quote' => $request->get('quote')
         ));
 
-        return 'lol';
+        $newRowId = $db->lastInsertId();
 
+        return $app->redirect("/quotes/$newRowId");
     }
 }
