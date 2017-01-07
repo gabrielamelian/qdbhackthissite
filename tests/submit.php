@@ -1,17 +1,9 @@
 <?php
 
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/base.php';
 
-use Silex\WebTestCase;
-
-class SubmitTest extends WebTestCase {
-
-    public function createApplication() {
-      $app = require __DIR__.'/../app/app.php';
-      $app['debug'] = true;
-      unset($app['exception_handler']);
-      return $app;
-    }
+class SubmitTest extends BaseTest {
 
     public function testHelloWorld() {
       $client = $this->createClient();
