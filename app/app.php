@@ -9,6 +9,10 @@ require_once __DIR__.'/../controllers/quotes.php';
 
 $app['debug'] = true;
 
+$app->register(new Silex\Provider\TwigServiceProvider(), array(
+    'twig.path' => __DIR__.'/views',
+));
+
 $app->get('/quotes/random', 'Controllers\\Quotes::random');
 
 //Homepage redirects to the quote route
