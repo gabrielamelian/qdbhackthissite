@@ -1,25 +1,24 @@
 <?php
 
-require_once __DIR__.'/../controllers/main.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
-use Controllers\Main;
+use Silex\WebTestCase;
 
-class ContactFormTest extends \PHPUnit_Framework_TestCase {
+class SubmitTest extends WebTestCase {
 
-    public function setUp() {
-        echo "test setUp\n";
+    public function createApplication() {
+      $app = require __DIR__.'/../app/app.php';
+      $app['debug'] = true;
+      unset($app['exception_handler']);
+      return $app;
     }
 
-    public function tearDown() {
-        echo "test tearDown\n";
+    public function testHelloWorld() {
+      $client = $this->createClient();
+      $crawler = $client->request('GET', '/hello/gabita');
+
+      $this->assertTrue($client->getResponse()->isOk());
+      $this->assertCount(1, $crawler->filter('html:contains("Hello gabita")'));
     }
 
-    public function testDisplaysForm() {
-      
-      $this->assertTrue(false);
-    }
-
-    public function testSubmit() {
-
-    }
 }
