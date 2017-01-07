@@ -13,7 +13,7 @@ $app->get('/quotes/random', 'Controllers\\Quotes::random');
 
 //Homepage redirects to the quote route
 $app->get('/', function () use ($app) {
-    return $app->redirect('/quotes');
+    return $app->redirect('/quotes/random');
 });
 
 return $app;

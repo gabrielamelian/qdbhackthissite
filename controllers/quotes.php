@@ -7,8 +7,8 @@ namespace Controllers
 {
     class Quotes
     {
-        public function random(Request $request, Application $app) {
-          
+        public function random() {
+
         }
     }
 }
