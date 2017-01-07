@@ -2,19 +2,21 @@
 
 use Silex\WebTestCase;
 
+define('TESTING', true);
+
 class BaseTest extends WebTestCase {
 
     private $testDB = 'TEST_DB_QDB';
     public $db = NULL;
 
     public function createApplication() {
-        define('TESTING', true);
-
         $app = require __DIR__.'/../app/app.php';
         $app['debug'] = true;
         unset($app['exception_handler']);
 
-        $this->db = $app['db'];
+        try {
+            $this->db = $app['db'];
+        } catch(Exception $e) {}
 
         return $app;
     }
@@ -34,7 +36,8 @@ class BaseTest extends WebTestCase {
             $this->db->query("CREATE DATABASE {$this->testDB};");
             $this->db->query("USE {$this->testDB};");
         } catch(PDOException $exc) {
-            // If temporary database already exists, delete and try again.
+            // If temporary database already exists, delete and try again 
+            // only once.
             if(!$last) {
                 $this->databaseTearDown();
                 $this->databaseSetUp(true);
@@ -48,7 +51,9 @@ class BaseTest extends WebTestCase {
     }
 
     public function databaseTearDown() {
-        $this->db->query("DROP DATABASE {$this->testDB}");
+        if($this->db) {
+            $this->db->query("DROP DATABASE {$this->testDB}");
+        }
     }
 
     public function initSQL($file) {
