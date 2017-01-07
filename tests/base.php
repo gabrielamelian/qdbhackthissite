@@ -14,9 +14,7 @@ class BaseTest extends WebTestCase {
         $app['debug'] = true;
         unset($app['exception_handler']);
 
-        try {
-            $this->db = $app['db'];
-        } catch(Exception $e) {}
+        $this->db = $app['db'];
 
         return $app;
     }
