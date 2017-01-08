@@ -13,9 +13,7 @@ class Quotes
     }
 
     public function renderForm(Request $request, Application $app) {
-        return $app['twig']->render('quote_submit.html', array(
-            //'name' => $name,
-        ));
+        return $app['twig']->render('quote_submit.html');
     }
 
     public function submitForm(Request $request, Application $app) {

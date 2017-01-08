@@ -50,4 +50,12 @@ class SubmitTest extends BaseTest {
         $this->assertEquals($quoteArray['quote'], $this->quoteContents);
     }
 
+    public function testDisplaysForm() {
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/quotes/submit');
+
+        $this->assertCount(1, $crawler->filter('form'));
+        $this->assertCount(1, $crawler->filter('textarea[name=quote]'));
+    }
+
 }
