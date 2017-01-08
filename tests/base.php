@@ -68,4 +68,17 @@ class BaseTest extends WebTestCase {
             $this->db->query("DROP DATABASE {$this->testDB}");
         }
     }
+
+    /**
+     * Returns the number of elements in a particular database table for
+     * testing purposes only.
+     * @param $tableName the name of the table.
+     */
+    public function countTable($tableName) {
+        if(in_array($tableName, ['qdb_quotes', 'qdb_votes', 'qdb_captcha'])) {
+            return $this->db->fetchColumn("SELECT COUNT(*) FROM $tableName;");
+        } else {
+            throw new Exception("Invalid table name.");
+        }
+    }
 }

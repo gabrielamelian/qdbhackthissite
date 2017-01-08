@@ -15,6 +15,9 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 
 $app->get('/quotes/random', 'Controllers\\Quotes::random');
 
+$app->get('/quotes/submit', 'Controllers\\Quotes::renderForm');
+$app->post('/quotes/submit', 'Controllers\\Quotes::submitForm');
+
 //Homepage redirects to the quote route
 $app->get('/', function () use ($app) {
     return $app->redirect('/quotes/random');
