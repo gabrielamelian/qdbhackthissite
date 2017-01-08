@@ -1,24 +1,26 @@
 <?php
 
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/base.php';
 
-use Silex\WebTestCase;
+class IndexRandom extends BaseTest {
 
-class IndexRandom extends WebTestCase {
+    public function testRedirect() {
+      $this->seedDB();
+      $client = $this->createClient();
+      $crawler = $client->request('GET', '/');
 
-    public function createApplication() {
-      $app = require __DIR__.'/../app/app.php';
-      $app['debug'] = true;
-      unset($app['exception_handler']);
-      return $app;
+      $this->assertTrue($client->getResponse()->isRedirect('/quotes/random'),
+    'response is a redirect to /quotes/random');
     }
 
     public function testRandom() {
+      $this->seedDB();
       $client = $this->createClient();
       $crawler = $client->request('GET', '/quotes/random');
 
-      $this->assertTrue($client->getResponse()->isOk());
-      $this->assertCount(1, $crawler->filter('html:contains("Hello gabita")'));
+      $this->assertTrue($client->getResponse()->isOk(), 'Response from quotes random is ok');
+      $this->assertCount(50, $crawler->filter('div.quotebox'), 'Page contains 50 divs with the class "quotebox"');
     }
 
 }
