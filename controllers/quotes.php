@@ -13,7 +13,9 @@ class Quotes
     }
 
     public function renderForm(Request $request, Application $app) {
-        var_dump($request);
+        return $app['twig']->render('quote_submit.html', array(
+            //'name' => $name,
+        ));
     }
 
     public function submitForm(Request $request, Application $app) {
