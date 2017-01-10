@@ -61,7 +61,27 @@ class SubmitTest extends BaseTest {
     }
 
     public function testBlankQuoteFails() {
-        $this->assertTrue(false);
+        $client = $this->createClient();
+        $crawler = $client->request('POST', '/quotes/submit', array(
+            'form' => array(
+                'quote' => ""
+            )
+        ));
+
+        $this->assertCount(1, $crawler->filter('div[id=form]:contains("This value should not be blank.")'));
+    }
+
+    public function testShortQuoteFails() {
+        $client = $this->createClient();
+        $crawler = $client->request('POST', '/quotes/submit', array(
+            'form' => array(
+                'quote' => "lol"
+            )
+        ));
+
+        $msg = 'This value is too short. It should have 10 characters or more';
+        $this->assertCount(1, $crawler->filter('div[id=form]:contains("'.$msg.'")'));
+
     }
 
 }
