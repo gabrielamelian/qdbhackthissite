@@ -10,7 +10,9 @@ class SubmitTest extends BaseTest {
     private function fakeSubmit() {
         $client = $this->createClient();
         $crawler = $client->request('POST', '/quotes/submit', array(
-            'quote' => $this->quoteContents,
+            'form' => array(
+                'quote' => $this->quoteContents
+            )
         ));
 
         return array($client, $crawler);
@@ -55,7 +57,11 @@ class SubmitTest extends BaseTest {
         $crawler = $client->request('GET', '/quotes/submit');
 
         $this->assertCount(1, $crawler->filter('form'));
-        $this->assertCount(1, $crawler->filter('textarea[name=quote]'));
+        $this->assertCount(1, $crawler->filter('textarea[id=form_quote]'));
+    }
+
+    public function testBlankQuoteFails() {
+        $this->assertTrue(false);
     }
 
 }
