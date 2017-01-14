@@ -8,7 +8,8 @@
         "symfony/twig-bridge": "^3.2",
         "symfony/config": "^3.2",
         "symfony/translation": "^3.2",
-        "symfony/security-csrf": "^3.2"
+        "symfony/security-csrf": "^3.2",
+        "dapphp/securimage": "~3.6"
     },
     "require-dev": {
         "symfony/css-selector": "^3.2",
