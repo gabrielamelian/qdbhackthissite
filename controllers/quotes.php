@@ -26,10 +26,6 @@ class Quotes {
         return $form;
     }
 
-    public function random(Request $request, Application $app) {
-        return "<html>lol</html>";  
-    }
-
     public function submit(Request $request, Application $app) {
         $form = $this->getForm($request, $app);
 
@@ -54,5 +50,9 @@ class Quotes {
     public function captcha(Request $request, Application $app) {
         $img = new \Securimage();
         return $img->show();
+    }
+
+    public function random(Request $request, Application $app) {
+        return "<html>lol</html>";  
     }
 }
