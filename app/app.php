@@ -11,6 +11,7 @@ require_once __DIR__.'/../controllers/quotes.php';
 // Config
 $app['debug'] = true;
 
+$app->register(new Silex\Provider\FormServiceProvider());
 $app->register(new Silex\Provider\LocaleServiceProvider());
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
@@ -26,13 +27,6 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'locale_fallbacks' => array('en'),
 ));
-
-$app->register(new Silex\Provider\FormServiceProvider());
-$app->extend('form.types', function ($types) use ($app) {
-    $types[] = new FormTypes\CaptchaType();
-
-    return $types;
-});
 
 if(!defined('RUNNING_UNIT_TESTS')) {
     $app->register(new Silex\Provider\CsrfServiceProvider());
