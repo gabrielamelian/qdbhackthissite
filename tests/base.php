@@ -2,7 +2,7 @@
 
 use Silex\WebTestCase;
 
-define('TESTING', true);
+define('RUNNING_UNIT_TESTS', true);
 
 class BaseTest extends WebTestCase {
 
