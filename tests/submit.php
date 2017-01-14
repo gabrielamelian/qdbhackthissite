@@ -84,4 +84,11 @@ class SubmitTest extends BaseTest {
 
     }
 
+    public function testHasCaptcha() {
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/quotes/submit');
+
+        $this->assertCount(1, $crawler->filter('input[id=form_captcha]'));
+    }
+
 }

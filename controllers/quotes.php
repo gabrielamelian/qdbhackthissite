@@ -10,8 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;
 use FormTypes\CaptchaType;
 
-class Quotes
-{
+class Quotes {
     private function getForm(Request $request, Application $app) {
         $form = $app['form.factory']->createBuilder(FormType::class)
             ->add('quote', TextareaType::class, array(

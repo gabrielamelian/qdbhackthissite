@@ -15,6 +15,13 @@ $app->register(new Silex\Provider\LocaleServiceProvider());
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../views',
+    'twig.options' => array(
+        'autoescape' => 'html',
+    ),
+    'twig.form.templates' => array(
+        'bootstrap_3_layout.html.twig',
+        'forms_override.html'
+    ),
 ));
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'locale_fallbacks' => array('en'),
