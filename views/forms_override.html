@@ -4,7 +4,7 @@
         <a href="#" onclick="document.getElementById('captcha').src = 'captcha.png?' + Math.random(); return false">[ Different Image ]</a>
     </div>
     <div class='captcha_image'>
-        <img id="captcha" src="captcha.png" alt="CAPTCHA Image" />
-        <p>Note: CAPTCHA is case-sensitive.</p>
+        <div><img id="captcha" src="captcha.png" alt="CAPTCHA Image" /></div>
+        <span class='help-block'>Note: CAPTCHA is case-sensitive.</span>
     </div>
 {% endblock %}
