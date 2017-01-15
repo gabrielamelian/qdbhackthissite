@@ -39,5 +39,6 @@ $app->get('/', function () use ($app) {
 });
 $app->match('/quotes/submit', 'Controllers\\Quotes::submit');
 $app->get('/quotes/captcha.png', 'Controllers\\Quotes::captcha');
+$app->post('/quotes/{quoteId}/vote', 'Controllers\\Quotes::vote');
 
 return $app;
