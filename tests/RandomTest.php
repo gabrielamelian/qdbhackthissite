@@ -1,9 +1,9 @@
 <?php
 
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/base.php';
+require_once __DIR__.'/../includes/BaseTest.php';
 
-class IndexRandom extends BaseTest {
+class IndexRandom extends Base {
 
     public function testRedirect() {
       $this->seedDB();
