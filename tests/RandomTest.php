@@ -3,7 +3,7 @@
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../includes/BaseTest.php';
 
-class IndexRandom extends Base {
+class IndexRandom extends BaseTest {
 
     public function testRedirect() {
       $this->seedDB();

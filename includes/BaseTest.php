@@ -4,7 +4,7 @@ use Silex\WebTestCase;
 
 define('RUNNING_UNIT_TESTS', true);
 
-abstract class Base extends WebTestCase {
+abstract class BaseTest extends WebTestCase {
 
     private $testDB = 'TEST_DB_QDB';
     public $db = NULL;
