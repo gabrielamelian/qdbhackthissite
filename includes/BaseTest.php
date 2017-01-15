@@ -4,7 +4,7 @@ use Silex\WebTestCase;
 
 define('RUNNING_UNIT_TESTS', true);
 
-class BaseTest extends WebTestCase {
+abstract class Base extends WebTestCase {
 
     private $testDB = 'TEST_DB_QDB';
     public $db = NULL;
@@ -50,7 +50,7 @@ class BaseTest extends WebTestCase {
         }
 
         $this->initSQL(__DIR__.'/../schema.sql');
-        $this->initSQL(__DIR__.'/seeds.sql');
+        $this->initSQL(__DIR__.'/../tests/seeds.sql');
     }
 
     public function seedDB() {

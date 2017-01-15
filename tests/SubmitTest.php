@@ -1,9 +1,9 @@
 <?php
 
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/base.php';
+require_once __DIR__.'/../includes/BaseTest.php';
 
-class SubmitTest extends BaseTest {
+class SubmitTest extends Base {
 
     private $quoteContents = 'me> i can internetz\n';
 
