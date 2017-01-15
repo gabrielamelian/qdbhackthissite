@@ -55,6 +55,6 @@ class Quotes {
     public function random(Request $request, Application $app) {
         $db = $app['db'];
         $quotes = $db->fetchAll('SELECT * FROM qdb_quotes');
-        return "<html>lol</html>";
+        return $app['twig']->render('display_quotes.html', $quotes);
     }
 }
