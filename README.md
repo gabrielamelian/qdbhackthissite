@@ -28,5 +28,5 @@ Testing
 =======
 
 ```
-phpunit tests/submit.php
+phpunit tests/
 ```
