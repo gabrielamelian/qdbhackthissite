@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}IRC quotes{% endblock %}
+
+{% block content %}
+  {% for quote in quotes %}
+      <div class="quotebox">
+        <p class="quotetext">{{ quote.quote }}</p>
+        <div class="score">
+          <p>Score: {{ quote.score }}</p>
+          <p>Votes: {{ quote.votes }}</p>
+        </div>
+      </div>
+  {% else %}
+      No quotes have been found.
+  {% endfor %}
+{% endblock %}
