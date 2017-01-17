@@ -20,8 +20,8 @@ class IndexRandom extends Base {
       $crawler = $client->request('GET', '/quotes/random');
 
       $this->assertTrue($client->getResponse()->isOk(), 'Response from quotes random is ok');
-      $this->assertCount(50, $crawler->filter('div.quotebox'), 'Page contains 50 divs with the class "quotebox"');
-      $this->assertCount(50, $crawler->filter('p.quotetext'), 'Page contains 50 p tags with the class "quotetext"');
+      $this->assertCount(40, $crawler->filter('div.quotebox'), 'Page contains 50 divs with the class "quotebox"');
+      $this->assertCount(40, $crawler->filter('p.quotetext'), 'Page contains 50 p tags with the class "quotetext"');
     }
 
 }
