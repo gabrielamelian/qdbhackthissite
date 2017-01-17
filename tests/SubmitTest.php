@@ -41,7 +41,7 @@ class SubmitTest extends BaseTest {
 
         $response = $client->getResponse();
         $redirectLocation = $response->headers->get('location');
-        $quoteId = split("/", $redirectLocation)[2];
+        $quoteId = explode("/", $redirectLocation)[2];
 
         $quoteArray = $this->db->fetchAssoc("SELECT * FROM qdb_quotes WHERE id = ?", 
             array($quoteId));
