@@ -3,5 +3,9 @@
 {% block title %}IRC quotes{% endblock %}
 
 {% block content %}
-<div class="quotebox"></div>
+  {% for quote in quotes %}
+      <div class="quotebox">{{ quote.quote }}</div>
+  {% else %}
+      No quotes have been found.
+  {% endfor %}
 {% endblock %}
