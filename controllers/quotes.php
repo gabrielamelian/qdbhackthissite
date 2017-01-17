@@ -15,7 +15,7 @@ class Quotes {
         $form = $app['form.factory']->createBuilder(FormType::class)
             ->add('quote', TextareaType::class, array(
                 'constraints' => array(
-                        new Assert\NotBlank(), 
+                        new Assert\NotBlank(),
                         new Assert\Length(array('min' => 10))
                 )))
             ->add('captcha', CaptchaType::class)
@@ -53,6 +53,8 @@ class Quotes {
     }
 
     public function random(Request $request, Application $app) {
-        return "<html>lol</html>";  
+        $db = $app['db'];
+        $quotes = $db->fetchAll('SELECT * FROM qdb_quotes WHERE status = 1 ORDER BY RAND() LIMIT 50');
+        return $app['twig']->render('display_quotes.html', [ "quotes" => $quotes ]);
     }
 }

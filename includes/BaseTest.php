@@ -54,11 +54,18 @@ abstract class Base extends WebTestCase {
     }
 
     public function seedDB() {
-      for ($x = 0; $x <= 50; $x++){
+      for ($x = 0; $x < 40; $x++){
         $this->db->insert('qdb_quotes', array('score' => $x + 20,
           'votes' => $x + 25,
           'status' => 1,
           'quote' => 'This is quote number' . $x
+        ));
+      }
+      for ($i = 0; $i < 10; $i++){
+        $this->db->insert('qdb_quotes', array('score' => 0,
+          'votes' => 0,
+          'status' => 0,
+          'quote' => 'This is a quote that has not been approved'
         ));
       }
     }
