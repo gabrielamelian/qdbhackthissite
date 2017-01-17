@@ -3,6 +3,9 @@
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../includes/BaseTest.php';
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+
 class VoteTest extends BaseTest {
 
     private $quoteId = 1337;
@@ -34,27 +37,38 @@ class VoteTest extends BaseTest {
     }
 
     public function testInvalidAction() {
-        $client = $this->createClient();
-        $client->request('POST', "/quotes/{$this->quoteId}/vote", array(
-            'value' => 'lulz'
-        ));
+        $badRequest = false;
+        try {
+            $client = $this->createClient();
+            $client->request('POST', "/quotes/{$this->quoteId}/vote", array(
+                'value' => 'lulz'
+            ));
+            $response = $client->getResponse();
+        } catch(BadRequestHttpException $e) {
+            $badRequest = true;
+            $message = $e->getMessage();
+        }
 
-        $response = $client->getResponse();
-
-        $this->assertEquals(500, $response->getStatusCode());
-        $this->assertEquals("Invalid action.", $response->getContent());
+        $this->assertTrue($badRequest);
+        $this->assertEquals($message, "The value you selected is not a valid choice.");
     }
 
     public function testInvalidQuoteId() {
-        $client = $this->createClient();
-        $client->request('POST', "/quotes/1245125125125/vote", array(
-            'value' => 'upvote'
-        ));
 
-        $response = $client->getResponse();
+        $notFound = false;
+        try {
+            $client = $this->createClient();
+            $client->request('POST', "/quotes/1245125125125/vote", array(
+                'value' => 'upvote'
+            ));
+            $response = $client->getResponse();
+        } catch(NotFoundHttpException $e) {
+            $notFound = true;
+            $message = $e->getMessage();
+        }
 
-        $this->assertEquals(500, $response->getStatusCode());
-        $this->assertEquals("Invalid quote id.", $response->getContent());
+        $this->assertTrue($notFound);
+        $this->assertEquals($message, "Quote 2147483647 does not exist.");
     }
 
 

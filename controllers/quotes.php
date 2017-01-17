@@ -2,13 +2,14 @@
 
 namespace Controllers;
 
+use FormTypes\CaptchaType;
 use Silex\Application;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Constraints as Assert;
-use FormTypes\CaptchaType;
 
 class Quotes {
 
@@ -62,39 +63,28 @@ class Quotes {
         return "<html>lol</html>";  
     }
 
-    private function validateVote(Request $request, Application $app, $quoteId) {
-        $action = $request->get('value');
-        if(!in_array($action, $this->valid_actions)) {
-            return new Response('Invalid action.', 500);
-        }
+    private function validateVote($app, $action) {
+        $validator = $app['validator'];
 
-        $quoteId = (int) $quoteId;
-        $quote = $app['db']->fetchAssoc("SELECT * FROM qdb_quotes where id = ?", 
-            array($quoteId));
-        
-        if(!$quote) {
-            return new Response('Invalid quote id.', 500);
-        } else {
-            return $quote;
+        $errors = $validator->validate($action, new
+            Assert\Choice($this->valid_actions));
+
+        if(sizeof($errors) > 0) {
+            throw new BadRequestHttpException($errors[0]->getMessage());
         }
     }
 
-    public function vote(Request $request, Application $app, $quoteId) {
-        $result = $this->validateVote($request, $app, $quoteId);
-        $resultIsError = !is_array($result);
-        if($resultIsError) {
-            return $result;
-        } else {
-            $quote = $result;
-        }
+    public function vote(Request $request, Application $app, $quote) {
+        $action = $request->get('value');
+        $result = $this->validateVote($app, $action);
 
         $newVoteCount = $quote['votes'] + 1;
         $newScore = $action == "upvote" ? $quote['score'] + 1 : $quote['score'] - 1;
 
         $app['db']->update('qdb_quotes', 
             array('votes' => $newVoteCount, 'score' => $newScore), 
-            array('id' => $quoteId));
+            array('id' => $quote['id']));
         
-        return "lol";
+        return "OK";
     }
 }

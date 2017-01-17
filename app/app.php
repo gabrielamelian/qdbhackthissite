@@ -6,6 +6,7 @@ $app = new Silex\Application();
 
 require __DIR__.'/../config.php';
 require_once __DIR__.'/../includes/captcha.php';
+require_once __DIR__.'/../includes/quote.php';
 require_once __DIR__.'/../controllers/quotes.php';
 
 // Config
@@ -27,6 +28,9 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'locale_fallbacks' => array('en'),
 ));
+$app['converter.quote'] = function () use ($app) {
+    return new QuoteConverter($app);
+};
 
 if(!defined('RUNNING_UNIT_TESTS')) {
     $app->register(new Silex\Provider\CsrfServiceProvider());
@@ -39,6 +43,7 @@ $app->get('/', function () use ($app) {
 });
 $app->match('/quotes/submit', 'Controllers\\Quotes::submit');
 $app->get('/quotes/captcha.png', 'Controllers\\Quotes::captcha');
-$app->post('/quotes/{quoteId}/vote', 'Controllers\\Quotes::vote');
+$app->post('/quotes/{quote}/vote', 'Controllers\\Quotes::vote')
+    ->convert('quote', 'converter.quote:convert');
 
 return $app;
