@@ -3,7 +3,7 @@
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../includes/BaseTest.php';
 
-class SubmitTest extends Base {
+class SubmitTest extends BaseTest {
 
     private $quoteContents = 'me> i can internetz\n';
 
