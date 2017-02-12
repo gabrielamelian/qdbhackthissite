@@ -5,7 +5,8 @@ require_once __DIR__.'/../vendor/autoload.php';
 $app = new Silex\Application();
 
 require __DIR__.'/../config.php';
-require_once __DIR__.'/../includes/captcha.php';
+require_once __DIR__.'/../includes/MatchesCaptcha.php';
+require_once __DIR__.'/../includes/VoteIsValid.php';
 require_once __DIR__.'/../includes/quote.php';
 require_once __DIR__.'/../controllers/quotes.php';
 

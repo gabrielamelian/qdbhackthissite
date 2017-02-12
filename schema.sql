@@ -19,7 +19,7 @@ CREATE TABLE `qdb_votes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `qid` int(10) unsigned NOT NULL,
   `ip` varchar(15) NOT NULL,
-  `time` date NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `value` int(1),
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
