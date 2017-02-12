@@ -20,17 +20,6 @@ class VoteIsValid extends Constraint {
 
 class VoteIsValidValidator extends ConstraintValidator {
     public function validate($value, Constraint $constraint) {
-        //if(defined('RUNNING_UNIT_TESTS')) {
-            //return;
-        //}
-
-        //$img = new \Securimage();
-
-        //$failed = $img->check($value) == false;
-        //if ($failed) {
-            //$this->context->buildViolation($constraint->message)
-                //->addViolation();
-        //}
         $prevVote = $constraint->prevVote;
         if($prevVote) {
             $prevValue = $prevVote['value'];
