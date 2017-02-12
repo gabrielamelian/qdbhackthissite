@@ -9,12 +9,27 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class VoteTest extends BaseTest {
 
     private $quoteId = 1337;
+    private $ipAddress = '1.3.3.7';
+
+    public function setUp() {
+        $_SERVER['REMOTE_ADDR'] = $this->ipAddress;
+        parent::setUp();
+    }
 
     private function getQuote() {
         $quoteArray = $this->db->fetchAssoc("SELECT * FROM qdb_quotes WHERE id = ?", 
             array($this->quoteId));
 
         return $quoteArray;
+    }
+
+    private function getVote() {
+        $voteArray = $this->db->fetchAssoc("SELECT * FROM qdb_votes WHERE ip = ? and qid = ?", [
+            $this->ipAddress,
+            $this->quoteId
+        ]);
+
+        return $voteArray;
     }
 
     private function upvote() {
@@ -123,4 +138,19 @@ class VoteTest extends BaseTest {
         $this->assertEquals(1201, $quoteArray['votes']);
     }
 
+    public function testStoresIPUpvote() {
+        $this->upvote();
+
+        $voteArray = $this->getVote();
+        $this->assertNotFalse($voteArray);
+        $this->assertEquals($voteArray['value'], 0);
+    }
+
+    public function testStoresIPDownvote() {
+        $this->downvote();
+
+        $voteArray = $this->getVote();
+        $this->assertNotFalse($voteArray);
+        $this->assertEquals($voteArray['value'], 1);
+    }
 }

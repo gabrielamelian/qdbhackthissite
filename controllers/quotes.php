@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use FormTypes\CaptchaType;
+use Constraints\VoteIsValid;
 use Silex\Application;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -14,8 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Quotes {
 
     private $valid_actions = array(
-        'upvote',
-        'downvote'
+        0 => 'upvote',
+        1 => 'downvote'
     );
 
     private function getForm(Request $request, Application $app) {
@@ -65,20 +66,42 @@ class Quotes {
         return $app['twig']->render('display_quotes.html', [ "quotes" => $quotes ]);
     }
 
-    private function validateVote($app, $action) {
+    private function validateVote($app, $action, $prevVote) {
         $validator = $app['validator'];
 
-        $errors = $validator->validate($action, new
-            Assert\Choice($this->valid_actions));
+        $errors = $validator->validate($action, [ 
+            new Assert\Choice($this->valid_actions),
+            new VoteIsValid($prevVote)
+        ]);
 
         if(sizeof($errors) > 0) {
             throw new BadRequestHttpException($errors[0]->getMessage());
         }
     }
 
+    private function storeVote($app, $ipAddress, $action, $prevVote, $quoteId) {
+        $vote = [
+            'qid' => $quoteId,
+            'ip' => $ipAddress,
+            'value' => $action == 'upvote' ? 0 : 1
+        ];
+
+        if($prevVote) {
+            $app['db']->update('qdb_votes', $vote, ['id' => $prevVote['id']]);
+        } else {
+            $app['db']->insert('qdb_votes', $vote);
+        }
+    }
+
     public function vote(Request $request, Application $app, $quote) {
+        $ipAddress = $_SERVER['REMOTE_ADDR'];
+        $prevVote = $app['db']->fetchAssoc('SELECT * FROM qdb_votes WHERE ip = ? and qid = ?', [
+            $ipAddress,
+            $quote['id']
+        ]);
+
         $action = $request->get('value');
-        $result = $this->validateVote($app, $action);
+        $result = $this->validateVote($app, $action, $prevVote);
 
         $newVoteCount = $quote['votes'] + 1;
         $newScore = $action == "upvote" ? $quote['score'] + 1 : $quote['score'] - 1;
@@ -86,6 +109,8 @@ class Quotes {
         $app['db']->update('qdb_quotes', 
             array('votes' => $newVoteCount, 'score' => $newScore), 
             array('id' => $quote['id']));
+
+        $this->storeVote($app, $ipAddress, $action, $prevVote, $quote['id']);
         
         return "OK";
     }

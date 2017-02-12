@@ -1,0 +1,38 @@
+<?php
+
+namespace Constraints;
+
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintValidator;
+
+class VoteIsValid extends Constraint {
+    public $message = 'Vote invalid. Please upvote or downvote only once.';
+    public $prevVote = NULL;
+
+    /**
+     * @param $prevVote the previous vote for this IP address and quote ID, or
+     * NULL if this is the first vote.
+     */
+    public function __construct($prevVote) {
+        $this->prevVote = $prevVote;
+    }
+}
+
+class VoteIsValidValidator extends ConstraintValidator {
+    public function validate($value, Constraint $constraint) {
+        //if(defined('RUNNING_UNIT_TESTS')) {
+            //return;
+        //}
+
+        //$img = new \Securimage();
+
+        //$failed = $img->check($value) == false;
+        //if ($failed) {
+            //$this->context->buildViolation($constraint->message)
+                //->addViolation();
+        //}
+        //$this->context->buildViolation($constraint->message)
+            //->addViolation();
+        //var_dump($constraint->prevVote);
+    }
+}
