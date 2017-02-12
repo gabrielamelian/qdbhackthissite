@@ -54,7 +54,7 @@ abstract class BaseTest extends WebTestCase {
     }
 
     public function seedDB() {
-      for ($x = 0; $x < 40; $x++){
+      for ($x = 0; $x < 50; $x++){
         $this->db->insert('qdb_quotes', array('score' => $x + 20,
           'votes' => $x + 25,
           'status' => 1,
