@@ -100,20 +100,32 @@ class VoteTest extends BaseTest {
 
     public function testDoubleUpvoteCountsAsOne() {
         $this->upvote();
-        $this->upvote();
+        $badRequest = false;
+        try { 
+            $this->upvote();
+        } catch(BadRequestHttpException $e) {
+            $badRequest = true;
+        }
 
         $quoteArray = $this->getQuote();
 
+        $this->assertTrue($badRequest);
         $this->assertEquals(1001, $quoteArray['score']);
         $this->assertEquals(1201, $quoteArray['votes']);
     }
 
     public function testDoubleDownvoteCountsAsOne() {
         $this->downvote();
-        $this->downvote();
+        $badRequest = false;
+        try {
+            $this->downvote();
+        } catch(BadRequestHttpException $e) {
+            $badRequest = true;
+        }
 
         $quoteArray = $this->getQuote();
 
+        $this->assertTrue($badRequest);
         $this->assertEquals(999, $quoteArray['score']);
         $this->assertEquals(1201, $quoteArray['votes']);
     }

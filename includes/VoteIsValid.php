@@ -31,8 +31,16 @@ class VoteIsValidValidator extends ConstraintValidator {
             //$this->context->buildViolation($constraint->message)
                 //->addViolation();
         //}
-        //$this->context->buildViolation($constraint->message)
-            //->addViolation();
-        //var_dump($constraint->prevVote);
+        $prevVote = $constraint->prevVote;
+        if($prevVote) {
+            $prevValue = $prevVote['value'];
+            $doubleUpvote = $prevValue == 0 && $value == 'upvote';
+            $doubleDownvote = $prevValue == 1 && $value == 'downvote';
+
+            if($doubleUpvote || $doubleDownvote) {
+                $this->context->buildViolation($constraint->message)
+                    ->addViolation();
+            }
+        }
     }
 }
