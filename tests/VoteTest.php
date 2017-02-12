@@ -10,27 +10,40 @@ class VoteTest extends BaseTest {
 
     private $quoteId = 1337;
 
-    public function testUpvote() {
+    private function getQuote() {
+        $quoteArray = $this->db->fetchAssoc("SELECT * FROM qdb_quotes WHERE id = ?", 
+            array($this->quoteId));
+
+        return $quoteArray;
+    }
+
+    private function upvote() {
         $client = $this->createClient();
         $crawler = $client->request('POST', "/quotes/{$this->quoteId}/vote", array(
             'value' => 'upvote'
         ));
+    }
 
-        $quoteArray = $this->db->fetchAssoc("SELECT * FROM qdb_quotes WHERE id = ?", 
-            array($this->quoteId));
+    private function downvote() {
+        $client = $this->createClient();
+        $crawler = $client->request('POST', "/quotes/{$this->quoteId}/vote", array(
+            'value' => 'downvote'
+        ));
+    }
+
+    public function testUpvote() {
+        $this->upvote();
+
+        $quoteArray = $this->getQuote();
 
         $this->assertEquals(1001, $quoteArray['score']);
         $this->assertEquals(1201, $quoteArray['votes']);
     }
 
     public function testDownvote() {
-        $client = $this->createClient();
-        $crawler = $client->request('POST', "/quotes/{$this->quoteId}/vote", array(
-            'value' => 'downvote'
-        ));
+        $this->downvote();
 
-        $quoteArray = $this->db->fetchAssoc("SELECT * FROM qdb_quotes WHERE id = ?", 
-            array($this->quoteId));
+        $quoteArray = $this->getQuote();
 
         $this->assertEquals(999, $quoteArray['score']);
         $this->assertEquals(1201, $quoteArray['votes']);
@@ -54,7 +67,6 @@ class VoteTest extends BaseTest {
     }
 
     public function testInvalidQuoteId() {
-
         $notFound = false;
         try {
             $client = $this->createClient();
@@ -71,9 +83,44 @@ class VoteTest extends BaseTest {
         $this->assertEquals($message, "Quote 2147483647 does not exist.");
     }
 
+    public function testDoubleUpvoteCountsAsOne() {
+        $this->upvote();
+        $this->upvote();
 
-    public function testRateLimiting() {
-        $this->assertTrue(false);
+        $quoteArray = $this->getQuote();
+
+        $this->assertEquals(1001, $quoteArray['score']);
+        $this->assertEquals(1201, $quoteArray['votes']);
+    }
+
+    public function testDoubleDownvoteCountsAsOne() {
+        $this->downvote();
+        $this->downvote();
+
+        $quoteArray = $this->getQuote();
+
+        $this->assertEquals(999, $quoteArray['score']);
+        $this->assertEquals(1201, $quoteArray['votes']);
+    }
+
+    public function testChangeVoteOne() {
+        $this->upvote();
+        $this->downvote();
+
+        $quoteArray = $this->getQuote();
+
+        $this->assertEquals(999, $quoteArray['score']);
+        $this->assertEquals(1201, $quoteArray['votes']);
+    }
+
+    public function testChangeVoteTwo() {
+        $this->downvote();
+        $this->upvote();
+
+        $quoteArray = $this->getQuote();
+
+        $this->assertEquals(1001, $quoteArray['score']);
+        $this->assertEquals(1201, $quoteArray['votes']);
     }
 
 }
