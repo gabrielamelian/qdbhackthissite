@@ -43,6 +43,7 @@ $app->get('/', function () use ($app) {
     return $app->redirect('/quotes/random');
 });
 $app->get('/quotes/top50', 'Controllers\\Quotes::top50');
+$app->get('/quotes/bottom50', 'Controllers\\Quotes::bottom50');
 $app->match('/quotes/submit', 'Controllers\\Quotes::submit');
 $app->get('/quotes/captcha.png', 'Controllers\\Quotes::captcha');
 $app->post('/quotes/{quote}/vote', 'Controllers\\Quotes::vote')

@@ -72,6 +72,12 @@ class Quotes {
         return $app['twig']->render('display_quotes.html', [ "quotes" => $quotes ]);
     }
 
+    public function bottom50(Request $request, Application $app) {
+        $db = $app['db'];
+        $quotes = $db->fetchAll('SELECT * FROM qdb_quotes WHERE status = 1 ORDER BY score LIMIT 50');
+        return $app['twig']->render('display_quotes.html', [ "quotes" => $quotes ]);
+    }
+
     private function validateVote($app, $action, $prevVote) {
         $validator = $app['validator'];
 
