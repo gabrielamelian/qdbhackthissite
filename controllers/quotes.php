@@ -66,10 +66,16 @@ class Quotes {
         return $app['twig']->render('display_quotes.html', [ "quotes" => $quotes ]);
     }
 
+    public function top50(Request $request, Application $app) {
+        $db = $app['db'];
+        $quotes = $db->fetchAll('SELECT * FROM qdb_quotes WHERE status = 1 ORDER BY score DESC LIMIT 50');
+        return $app['twig']->render('display_quotes.html', [ "quotes" => $quotes ]);
+    }
+
     private function validateVote($app, $action, $prevVote) {
         $validator = $app['validator'];
 
-        $errors = $validator->validate($action, [ 
+        $errors = $validator->validate($action, [
             new Assert\Choice($this->valid_actions),
             new VoteIsValid($prevVote)
         ]);
@@ -108,17 +114,17 @@ class Quotes {
         if($undoLastVote) {
             $newVoteCount = $quote['votes'];
             $newScore = $action == "upvote" ? $quote['score'] + 2 : $quote['score'] - 2;
-        } else { 
+        } else {
             $newVoteCount = $quote['votes'] + 1;
             $newScore = $action == "upvote" ? $quote['score'] + 1 : $quote['score'] - 1;
         }
 
-        $app['db']->update('qdb_quotes', 
-            array('votes' => $newVoteCount, 'score' => $newScore), 
+        $app['db']->update('qdb_quotes',
+            array('votes' => $newVoteCount, 'score' => $newScore),
             array('id' => $quote['id']));
 
         $this->storeVote($app, $ipAddress, $action, $prevVote, $quote['id']);
-        
+
         return "OK";
     }
 }
