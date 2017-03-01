@@ -1,11 +1,77 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         {% block head %}
-            <title>{% block title %}IRC Quote Database{% endblock %} - QDB</title>
+        <title>HTS QDB - Recording your idiocy - {% block title %}IRC Quote Database{% endblock %}</title>
+        <link href="stylesheet.css" rel="stylesheet" type="text/css" />
+        <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
         {% endblock %}
     </head>
-    <body>
-        <div id="content">{% block content %}{% endblock %}</div>
+    <body> 
+        <div id="topbar" align="center">
+            <a href="https://www.hackthissite.org" id="active">HackThisSite</a> -
+            <a href="irc://irc.hackthissite.org:+7000">IRC</a> -
+            <a href="https://www.hackthissite.org/forums">Forums</a> -
+            <a href="http://www.cafepress.com/htsstore">Store</a>
+        </div>
+
+        <div align="center">
+            <br />
+            <a href="https://www.irc.hackthissite.org"><img src="images/header.jpg" alt="HackThisSite IRC" border="0" /></a>
+        </div>
+        <div align="center">
+            <div align="center" class="radical"></div>
+
+            <table width="780" border="0" cellpadding="0" cellspacing="0" class="siteheader">
+                <tr>
+                    <td class="sitetopheader"><img src="images/hts_topheader.jpg" alt="header" width="780" height="60" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td width="160" valign="top" class="navbar">
+                                    <div align="center">
+                                        <h4 class="header">Status</h4>
+                                        <ul class="navigation">
+                                            Users Online: <span style="color:#0077FF;font-weight:bold;">UNKNOWN</span>
+                                        </ul>
+                                        <h4 class="header">Pages</h4>
+                                        <ul class="navigation">
+                                            <li><a class="nav" href="https://www.hackthissite.org/pages/irc/irc.php"><font class="incomplete">Chat!</font></a></li>
+                                            <li><a class="nav" href="https://www.irc.hackthissite.org/idlerpg/"><font class="incomplete">IdleRPG</font></a></li>
+                                            <li><a class="nav" href="https://www.irc.hackthissite.org/staff.php"><font class="incomplete">IRC Staff</font></a></li>
+                                            <li><a class="nav" href="https://www.hackthissite.org/irc/stats.php"><font class="incomplete">IRC Stats</font></a></li>
+                                            <li><a class="nav" href="https://www.irc.hackthissite.org/qdb"><font class="incomplete">Quote Database</font></a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td valign="top" class="sitebuffer">
+                                    <div id="content">{% block content %}{% endblock %}</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="sitebottomheader"><img src="images/hts_bottomheader.jpg" alt="footer" width="780" height="60" /></td>
+                </tr>
+            </table>
+            <br />
+        </div>
+
+        <div align="center" style="font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; color:#CCCCCC">
+            This site is the collective work of the HackThisSite staff. Please don't reproduce in part or whole without permission.
+        </div>
+
+        <div align="center">
+            <p>
+            <a href="http://validator.w3.org/check?uri=referer"><img src="images/xhtml10.png" width="80" height="15" border="0" alt="Valid XHTML 1.0 Transitional" /></a>
+            <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="images/css.png" width="80" height="15" border="0" alt="Valid CSS" /></a> 
+            <a href="http://www.php.net/"> <img src="images/phppow.gif" width="80" height="15" border="0" alt="Powered by PHP" /></a>
+            <a href="http://www.freebsd.org/"> <img src="images/freebsd.png" width="80" height="15" border="0" alt="Powered by FreeBSD" /></a>
+            </p>
+        </div>
     </body>
 </html>

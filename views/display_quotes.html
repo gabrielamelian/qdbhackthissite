@@ -3,7 +3,7 @@
 {% block title %}IRC quotes{% endblock %}
 
 {% block content %}
-  {% if submittedQuote %}
+  {% if submittedQuote|default(false) %}
     Your quote has been submitted and is pending moderation.
   {% endif %}
   {% for quote in quotes %}

@@ -7,7 +7,7 @@ INSERT INTO qdb_quotes (score, votes, status, quote) VALUES
 
 INSERT INTO qdb_quotes (id, score, votes, status, quote) VALUES
     (1337, 1000, 1200, 1, "quote leet"),
-    (1338, 1000, 1200, 1, "quote unleet");
+    (1338, 1000, 1200, 0, "quote unleet");
 
 INSERT INTO qdb_votes (qid, ip, time, value) VALUES 
     (1, '192.168.1.1', NOW(), 1),

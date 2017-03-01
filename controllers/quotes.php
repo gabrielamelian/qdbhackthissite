@@ -45,8 +45,6 @@ class Quotes {
                 'quote' => $data['quote']
             ));
 
-            $newRowId = $db->lastInsertId();
-
             return $app->redirect("/quotes/latest?submitted=true");
         }
 

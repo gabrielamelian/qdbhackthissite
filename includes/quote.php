@@ -21,13 +21,13 @@ class QuoteConverter {
         $quote = $this->app['db']->fetchAssoc("SELECT * FROM qdb_quotes where id = ?", 
             array($quoteId));
 
-        if($quote['status'] !== 1) {
-            throw new UnauthorizedHttpException("Unauthorized.");
-        }
-        
         if(!$quote) {
             throw new NotFoundHttpException(sprintf('Quote %d does not exist.', $id));
         } else {
+            if($quote['status'] !== "1") {
+                throw new UnauthorizedHttpException("Unauthorized.");
+            }
+        
             return $quote;
         }
     }
