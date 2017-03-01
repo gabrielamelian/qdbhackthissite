@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Silex\Application;
 
 /**
@@ -19,10 +20,14 @@ class QuoteConverter {
         $quoteId = (int) $id;
         $quote = $this->app['db']->fetchAssoc("SELECT * FROM qdb_quotes where id = ?", 
             array($quoteId));
-        
+
         if(!$quote) {
             throw new NotFoundHttpException(sprintf('Quote %d does not exist.', $id));
         } else {
+            if($quote['status'] !== "1") {
+                throw new UnauthorizedHttpException("Unauthorized.");
+            }
+        
             return $quote;
         }
     }

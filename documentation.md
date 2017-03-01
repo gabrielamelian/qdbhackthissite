@@ -13,10 +13,10 @@ PHPUnit for testing
 #Endpoints
 
 ...Restful routes...
-/quotes/random
+/quotes/random -> done
+/quotes/top50 -> done
+/quotes/bottom50 -> done
 /quotes/latest
-/quotes/top50
-/quotes/bottom50
 /quotes/submit
 /quotes/{id}
 /quotes/{id}/vote

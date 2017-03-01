@@ -85,7 +85,7 @@ class VoteTest extends BaseTest {
         $notFound = false;
         try {
             $client = $this->createClient();
-            $client->request('POST', "/quotes/1245125125125/vote", array(
+            $client->request('POST', "/quotes/999999/vote", array(
                 'value' => 'upvote'
             ));
             $response = $client->getResponse();
@@ -95,7 +95,7 @@ class VoteTest extends BaseTest {
         }
 
         $this->assertTrue($notFound);
-        $this->assertEquals($message, "Quote 2147483647 does not exist.");
+        $this->assertEquals($message, "Quote 999999 does not exist.");
     }
 
     public function testDoubleUpvoteCountsAsOne() {

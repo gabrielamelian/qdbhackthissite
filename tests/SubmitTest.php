@@ -43,8 +43,7 @@ class SubmitTest extends BaseTest {
         $redirectLocation = $response->headers->get('location');
         $quoteId = explode("/", $redirectLocation)[2];
 
-        $quoteArray = $this->db->fetchAssoc("SELECT * FROM qdb_quotes WHERE id = ?", 
-            array($quoteId));
+        $quoteArray = $this->db->fetchAssoc("SELECT * FROM qdb_quotes ORDER BY id desc LIMIT 1");
 
         $this->assertEquals($quoteArray['score'], 0);
         $this->assertEquals($quoteArray['votes'], 0);

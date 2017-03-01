@@ -45,9 +45,7 @@ class Quotes {
                 'quote' => $data['quote']
             ));
 
-            $newRowId = $db->lastInsertId();
-
-            return $app->redirect("/quotes/$newRowId");
+            return $app->redirect("/quotes/latest?submitted=true");
         }
 
         return $app['twig']->render('quote_submit.html', array(
@@ -76,6 +74,18 @@ class Quotes {
         $db = $app['db'];
         $quotes = $db->fetchAll('SELECT * FROM qdb_quotes WHERE status = 1 ORDER BY score LIMIT 50');
         return $app['twig']->render('display_quotes.html', [ "quotes" => $quotes ]);
+    }
+
+    public function latest(Request $request, Application $app) {
+        $db = $app['db'];
+        $quotes = $db->fetchAll('SELECT * FROM qdb_quotes WHERE status = 1 ORDER BY id desc LIMIT 50');
+
+        $submittedQuote = $request->get('submitted');
+
+        return $app['twig']->render('display_quotes.html', [ 
+            "quotes" => $quotes,
+            "submittedQuote" => $submittedQuote
+        ]);
     }
 
     private function validateVote($app, $action, $prevVote) {
@@ -132,5 +142,11 @@ class Quotes {
         $this->storeVote($app, $ipAddress, $action, $prevVote, $quote['id']);
 
         return "OK";
+    }
+
+    public function viewQuote(Request $request, Application $app, $quote) {
+        return $app['twig']->render('display_quote.html', array(
+            'quote' => $quote
+        ));
     }
 }

@@ -3,14 +3,11 @@
 {% block title %}IRC quotes{% endblock %}
 
 {% block content %}
+  {% if submittedQuote|default(false) %}
+    Your quote has been submitted and is pending moderation.
+  {% endif %}
   {% for quote in quotes %}
-      <div class="quotebox">
-        <p class="quotetext">{{ quote.quote }}</p>
-        <div class="score">
-          <p>Score: {{ quote.score }}</p>
-          <p>Votes: {{ quote.votes }}</p>
-        </div>
-      </div>
+      {% include "single_quote.html" %}
   {% else %}
       No quotes have been found.
   {% endfor %}
