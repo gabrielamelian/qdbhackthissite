@@ -139,4 +139,10 @@ class Quotes {
 
         return "OK";
     }
+
+    public function viewQuote(Request $request, Application $app, $quote) {
+        return $app['twig']->render('display_quote.html', array(
+            'quote' => $quote
+        ));
+    }
 }
