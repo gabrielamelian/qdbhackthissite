@@ -13,7 +13,7 @@ composer install
 Configure database
 ==================
 
-Copy `config.php.orig` into `config.php` and fill in the details. 
+Copy `config.php.orig` into `config.php` and fill in the details. schema.sql contains a base schema for the DB with some test data.
 
 Deploying on Apache
 ===================
