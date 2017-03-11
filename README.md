@@ -13,21 +13,9 @@ Copy `config.php.orig` into `config.php` and fill in the details.
 Deploying on Apache
 ===================
 
-Deploy these files on /var/www/html. Put this file in /var/www/html/web/.htaccess:
-
-```
-<IfModule mod_rewrite.c>
-    Options -MultiViews
-
-    RewriteEngine On
-    RewriteBase app
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [QSA,L]
-</IfModule>
-```
-
-Modify apache configuration so that it serves /var/www/html/web/.htaccess. This
+* Deploy these files on /var/www/html. 
+* Ensure AllowOverride and mod_rewrite are enabled.
+* Modify apache configuration so that it serves /var/www/html/web/. This
 can be done for example on the /etc/apache2/sites-enabled/000-default.conf:
 
 ```
@@ -39,7 +27,7 @@ can be done for example on the /etc/apache2/sites-enabled/000-default.conf:
 </VirtualHost>
 ```
 
-Restart apache.
+* Restart apache.
 
 Testing
 =======
