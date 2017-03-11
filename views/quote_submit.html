@@ -1,12 +1,25 @@
 {% extends "base.html" %}
 
+
 {% block title %}Submit quote{% endblock %}
 
 {% block content %}
-<form method="POST">
-    {{ form_widget(form) }}
+<div>
+    <p>
+    You may submit quotes from any chat medium, so long as they have reasonable 
+    formatting<br>(IRC, AIM, ICQ, Yahoo, NOT MSN or MS Chat).<br><br>
+    <b>Tips for approval:</b> no timestamps, keep it short (trim useless parts), remove trailing laughs, and avoid inside jokes.
+    </p>
+</div>
+<div>
+    <form method="POST">
+        {{ form_widget(form) }}
 
-    <input type="submit" >
-</form>
+        <input type="submit" class="quote_submit">
+    </form>
+
+    <br><br><font size="1"><b>Privacy Note:</b> Your IP address is never displayed publicly.</font>
+</div>
+
 {% endblock %}
 

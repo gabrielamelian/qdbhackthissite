@@ -1,7 +1,17 @@
-      <div class="quotebox">
-        <p class="quotetext">{{ quote.quote }}</p>
-        <div class="score">
-          <p>Score: {{ quote.score }}</p>
-          <p>Votes: {{ quote.votes }}</p>
-        </div>
-      </div>
+{% if loop is defined and loop.index is odd %}
+    {% set div_class = 'quotebox1' %}
+{% else %}
+    {% set div_class = 'quotebox0' %}
+{% endif %}
+
+<div class="quotebox {{div_class}}">
+    <div class="score quoteheader">
+        <p> <a href="/quotes/{{quote.id}}">#{{quote.id}}</a> <span id="score-{{quote.id}}">{{quote.score}}/{{quote.votes}}<span> </p>
+    </div>
+    <p class="quotetext">{{ quote.quote }}</p>
+    <div class='controls'>
+        <input type="submit" class='vote-button vote-button-{{quote.id}}' data-action='upvote' data-id="{{quote.id}}" value='upvote' />
+        <input type="submit" class='vote-button vote-button-{{quote.id}}' data-action='downvote' data-id="{{quote.id}}" value='downvote' />
+    </div>
+</div>
+<br />

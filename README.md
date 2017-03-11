@@ -1,3 +1,8 @@
+Quote database for "Hack This Site"
+===================================
+
+![awesome old-school design](web/images/qdbhackthissite.png)
+
 Install dependencies
 ====================
 
@@ -8,21 +13,26 @@ composer install
 Configure database
 ==================
 
-Copy `config.php.orig` into `config.php` and fill in the details. 
+Copy `config.php.orig` into `config.php` and fill in the details. schema.sql contains a base schema for the DB with some test data.
 
 Deploying on Apache
 ===================
 
-This application requires mod_rewrite in order to create nicer URLs. The `web`
-folder needs to be served, the rest of the files have to be outside the
-webroot.
-
-Alternatively for easier setup, this file can be put on the webroot:
+* Deploy these files on /var/www/html. 
+* Ensure AllowOverride and mod_rewrite are enabled.
+* Modify apache configuration so that it serves /var/www/html/web/. This
+can be done for example on the /etc/apache2/sites-enabled/000-default.conf:
 
 ```
-DirectoryIndex qdbhackthissite/web/index.php
-FallbackResource /qdbhackthissite/web/index.php
+<VirtualHost *:80>
+	ServerAdmin webmaster@localhost
+	DocumentRoot /var/www/html/web
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
 ```
+
+* Restart apache.
 
 Testing
 =======
