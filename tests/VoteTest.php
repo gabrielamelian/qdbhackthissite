@@ -37,6 +37,8 @@ class VoteTest extends BaseTest {
         $crawler = $client->request('POST', "/quotes/{$this->quoteId}/vote", array(
             'value' => 'upvote'
         ));
+
+        return $client->getResponse()->getContent();
     }
 
     private function downvote() {
@@ -44,6 +46,8 @@ class VoteTest extends BaseTest {
         $crawler = $client->request('POST', "/quotes/{$this->quoteId}/vote", array(
             'value' => 'downvote'
         ));
+
+        return $client->getResponse()->getContent();
     }
 
     public function testUpvote() {
@@ -65,20 +69,15 @@ class VoteTest extends BaseTest {
     }
 
     public function testInvalidAction() {
-        $badRequest = false;
-        try {
-            $client = $this->createClient();
-            $client->request('POST', "/quotes/{$this->quoteId}/vote", array(
-                'value' => 'lulz'
-            ));
-            $response = $client->getResponse();
-        } catch(BadRequestHttpException $e) {
-            $badRequest = true;
-            $message = $e->getMessage();
-        }
+        $client = $this->createClient();
+        $client->request('POST', "/quotes/{$this->quoteId}/vote", array(
+            'value' => 'lulz'
+        ));
 
-        $this->assertTrue($badRequest);
-        $this->assertEquals($message, "The value you selected is not a valid choice.");
+        $response = $client->getResponse();
+
+        // shouldn't have updated.
+        $this->assertEquals($response->getContent(), "1000/1200");
     }
 
     public function testInvalidQuoteId() {
@@ -99,33 +98,24 @@ class VoteTest extends BaseTest {
     }
 
     public function testDoubleUpvoteCountsAsOne() {
-        $this->upvote();
-        $badRequest = false;
-        try { 
-            $this->upvote();
-        } catch(BadRequestHttpException $e) {
-            $badRequest = true;
-        }
+        $firstResponse = $this->upvote();
+        $secondResponse = $this->upvote();
 
         $quoteArray = $this->getQuote();
 
-        $this->assertTrue($badRequest);
+        $this->assertEquals($firstResponse, $secondResponse);
+
         $this->assertEquals(1001, $quoteArray['score']);
         $this->assertEquals(1201, $quoteArray['votes']);
     }
 
     public function testDoubleDownvoteCountsAsOne() {
-        $this->downvote();
-        $badRequest = false;
-        try {
-            $this->downvote();
-        } catch(BadRequestHttpException $e) {
-            $badRequest = true;
-        }
-
+        $firstResponse = $this->downvote();
+        $secondResponse = $this->downvote();
         $quoteArray = $this->getQuote();
 
-        $this->assertTrue($badRequest);
+        $this->assertEquals($firstResponse, $secondResponse);
+
         $this->assertEquals(999, $quoteArray['score']);
         $this->assertEquals(1201, $quoteArray['votes']);
     }
