@@ -126,25 +126,30 @@ class Quotes {
         ]);
 
         $action = $request->get('value');
-        $result = $this->validateVote($app, $action, $prevVote);
+        try {
+            $this->validateVote($app, $action, $prevVote);
 
+            $undoLastVote = $prevVote !== false;
+            if($undoLastVote) {
+                $newVoteCount = $quote['votes'];
+                $newScore = $action == "upvote" ? $quote['score'] + 2 : $quote['score'] - 2;
+            } else {
+                $newVoteCount = $quote['votes'] + 1;
+                $newScore = $action == "upvote" ? $quote['score'] + 1 : $quote['score'] - 1;
+            }
 
-        $undoLastVote = $prevVote !== false;
-        if($undoLastVote) {
-            $newVoteCount = $quote['votes'];
-            $newScore = $action == "upvote" ? $quote['score'] + 2 : $quote['score'] - 2;
-        } else {
-            $newVoteCount = $quote['votes'] + 1;
-            $newScore = $action == "upvote" ? $quote['score'] + 1 : $quote['score'] - 1;
-        }
-
-        $app['db']->update('qdb_quotes',
-            array('votes' => $newVoteCount, 'score' => $newScore),
-            array('id' => $quote['id']));
+            $app['db']->update('qdb_quotes',
+                array('votes' => $newVoteCount, 'score' => $newScore),
+                array('id' => $quote['id']));
 
         $this->storeVote($app, $ipAddress, $action, $prevVote, $quote['id']);
+        } catch(BadRequestHttpException $e) {
+            $newScore = $quote['score'];
+            $newVoteCount = $quote['votes'];
+        }
 
-        return "OK";
+
+        return "$newScore/$newVoteCount";
     }
 
     public function viewQuote(Request $request, Application $app, $quote) {

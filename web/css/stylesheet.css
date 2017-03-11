@@ -128,7 +128,7 @@ a.nav:hover {
 }
 
 div.radical {
-	background-image:url(moo.jpg);
+	/*background-image:url(moo.jpg);*/
 	text-align: center;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px;
@@ -202,4 +202,8 @@ td.navbar h4 {
 
 .form-group, .captcha_image, .quote_submit {
     margin-top: 10px
+}
+
+.vote-button.pressed {
+    border-style:inset
 }
