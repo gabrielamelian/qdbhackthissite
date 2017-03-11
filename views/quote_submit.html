@@ -1,12 +1,30 @@
 {% extends "base.html" %}
 
+
 {% block title %}Submit quote{% endblock %}
 
 {% block content %}
-<form method="POST">
-    {{ form_widget(form) }}
+<form action="" name="add" method="post">
+    <div>
+        <p>
+        You may submit quotes from any chat medium, so long as they have reasonable 
+        formatting<br>(IRC, AIM, ICQ, Yahoo, NOT MSN or MS Chat).<br><br>
+        <b>Tips for approval:</b> no timestamps, keep it short (trim useless parts), remove trailing laughs, and avoid inside jokes.
+        </p>
+    </div>
+    <div>
+        <form method="POST">
+            {{ form_widget(form) }}
 
-    <input type="submit" >
+            <input type="submit" class="quote_submit">
+        </form>
+            <!--<textarea cols="65%" rows="10" name="quote" class="inputbox"></textarea><br><br>-->
+            <!--<input type="text" value="Captcha" class="inputbox" name="verify">&nbsp;&nbsp;&nbsp;-->
+            <!--<img src="captcha.php" alt="Verification Image"><br><br>-->
+            <!--<input type="submit" class="submit-button" value="Submit Quote" name="submit1">&nbsp;&nbsp;<input type="reset" class="submit-button" value="Reset">-->
+            <!--<br><br><font size="1"><b>Privacy Note:</b> Your IP address is never displayed publicly.</font>-->
+    </div>
 </form>
+
 {% endblock %}
 

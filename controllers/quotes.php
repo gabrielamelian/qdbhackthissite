@@ -22,10 +22,13 @@ class Quotes {
     private function getForm(Request $request, Application $app) {
         $form = $app['form.factory']->createBuilder(FormType::class)
             ->add('quote', TextareaType::class, array(
-                'constraints' => array(
+                'attr' => [
+                    'class' => 'input_quote'
+                ],
+                'constraints' => [
                         new Assert\NotBlank(),
                         new Assert\Length(array('min' => 10))
-                )))
+                ]))
             ->add('captcha', CaptchaType::class)
         ->getForm();
 

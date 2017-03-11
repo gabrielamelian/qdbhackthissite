@@ -13,16 +13,33 @@ Copy `config.php.orig` into `config.php` and fill in the details.
 Deploying on Apache
 ===================
 
-This application requires mod_rewrite in order to create nicer URLs. The `web`
-folder needs to be served, the rest of the files have to be outside the
-webroot.
-
-Alternatively for easier setup, this file can be put on the webroot:
+Deploy these files on /var/www/html. Put this file in /var/www/html/web/.htaccess:
 
 ```
-DirectoryIndex qdbhackthissite/web/index.php
-FallbackResource /qdbhackthissite/web/index.php
+<IfModule mod_rewrite.c>
+    Options -MultiViews
+
+    RewriteEngine On
+    RewriteBase app
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>
 ```
+
+Modify apache configuration so that it serves /var/www/html/web/.htaccess. This
+can be done for example on the /etc/apache2/sites-enabled/000-default.conf:
+
+```
+<VirtualHost *:80>
+	ServerAdmin webmaster@localhost
+	DocumentRoot /var/www/html/web
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+Restart apache.
 
 Testing
 =======
