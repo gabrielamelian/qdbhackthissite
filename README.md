@@ -1,3 +1,8 @@
+Quote database for "Hack This Site"
+===================================
+
+![awesome old-school design](web/images/qdbhackthissite.png)
+
 Install dependencies
 ====================
 
